@@ -1,7 +1,12 @@
 JSON in Java [package org.json]
 ===============================
 
-[![Maven Central](https://img.shields.io/maven-central/v/org.json/json.svg)](https://mvnrepository.com/artifact/org.json/json)
+This is a fork of the JSON project in github (https://github.com/stleary/JSON-java) for the 20180813 version.
+
+Compared to this implementation:
+- this is a Netbeans project
+- JSONObject and JSONArray both have an equals and hashCode method
+- a FileUtils class with static method has been added to simply the generation to/from a File / a JSON object
 
 JSON is a light-weight, language independent, data interchange format.
 See http://www.JSON.org/
