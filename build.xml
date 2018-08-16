@@ -65,7 +65,7 @@
              zipfile="${dist.dir}/${archiveName-LGPL}-bin-${version}.zip">
          <fileset description="docs" dir=".">
             <include name="README.md"/>
-            <include name="CHANGES"/>
+            <include name="CHANGES.md"/>
             <include name="LICENSE"/>
          </fileset>
          <fileset description="binaries" dir="${dist.dir}">
@@ -88,7 +88,7 @@
          </fileset>                        
          <fileset description="misc" dir=".">
             <include name="README.md"/>
-            <include name="CHANGES"/>
+            <include name="CHANGES.md"/>
             <include name="LICENSE"/>
             <include name="build.xml"/>
          </fileset>
