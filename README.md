@@ -7,6 +7,7 @@ Compared to this implementation:
 - this is a Netbeans project
 - JSONObject and JSONArray both have an equals and hashCode method
 - a FileUtils class with static method has been added to simply the generation to/from a File / a JSON object
+- The supported Java version is Java 8
 
 JSON is a light-weight, language independent, data interchange format.
 See http://www.JSON.org/
@@ -23,7 +24,7 @@ The license includes this restriction: "The software shall be used for good,
 not evil." If your conscience cannot live with that, then choose a different
 package.
 
-The package compiles on Java 1.6-1.8.
+The package compiles on Java 1.8.
 
 
 **JSONObject.java**: The `JSONObject` can parse text from a `String` or a `JSONTokener`
@@ -96,9 +97,6 @@ This package fully supports `Integer`, `Long`, and `Double` Java types. Partial 
 for `BigInteger` and `BigDecimal` values in `JSONObject` and `JSONArray` objects is provided
 in the form of `get()`, `opt()`, and `put()` API methods.
 
-Although 1.6 compatibility is currently supported, it is not a project goal and may be
-removed in some future release.
-
 In compliance with RFC7159 page 10 section 9, the parser is more lax with what is valid
 JSON than the Generator. For Example, the tab character (U+0009) is allowed when reading
 JSON Text strings, but when output by the Generator, tab is properly converted to \t in
@@ -106,36 +104,3 @@ the string. Other instances may occur where reading invalid JSON text does not c
 error to be generated. Malformed JSON Texts such as missing end " (quote) on strings or
 invalid number formats (1.2e6.3) will cause errors as such documents can not be read
  reliably.
-
-Release history:
-
-~~~
-20180813    POM change to include Automatic-Module-Name (#431)
-
-20180130    Recent commits
-
-20171018    Checkpoint for recent commits.
-
-20170516    Roll up recent commits.
-
-20160810    Revert code that was breaking opt*() methods.
-
-20160807    This release contains a bug in the JSONObject.opt*() and JSONArray.opt*() methods,
-it is not recommended for use.
-Java 1.6 compatability fixed, JSONArray.toList() and JSONObject.toMap(),
-RFC4180 compatibility, JSONPointer, some exception fixes, optional XML type conversion.
-Contains the latest code as of 7 Aug, 2016
-
-20160212    Java 1.6 compatibility, OSGi bundle. Contains the latest code as of 12 Feb, 2016.
-
-20151123    JSONObject and JSONArray initialization with generics. Contains the
-latest code as of 23 Nov, 2015.
-
-20150729    Checkpoint for Maven central repository release. Contains the latest code
-as of 29 July, 2015.
-~~~
-
-
-JSON-java releases can be found by searching the Maven repository for groupId "org.json"
-and artifactId "json". For example:
-https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.json%22%20AND%20a%3A%22json%22
