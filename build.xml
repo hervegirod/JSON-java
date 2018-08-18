@@ -113,15 +113,13 @@
                noindex="${javadoc.noindex}" nonavbar="${javadoc.nonavbar}"
                notree="${javadoc.notree}" private="${javadoc.private}"
                source="${javac.source}" splitindex="${javadoc.splitindex}"
+               overview="${src.dir}/overview.html"
                use="${javadoc.use}" useexternalfile="true" version="${javadoc.version}"
-               windowtitle="${javadoc.windowtitle}" executable="${javadocEXE}" >         
+               windowtitle="JSON Java API" executable="${javadocEXE}" >         
          <link href="${j2seapi}" />
          <!-- the Xdoclint argument avoid to get javadoc errors when the documentation format is not compliant for HTML 4, which was the case before
          Java 8. It would also not be a good idea, because empty tags like br are very useful -->
-         <arg line="-Xdoclint:none"/>
-         <classpath>
-            <path path="${tools.dir}/junit-4.12.jar"/>
-         </classpath>         
+         <arg line="-Xdoclint:none"/>       
          <fileset dir="${src.dir}" excludes="${excludes}" includes="${includes}">
             <filename name="**/*.java"/>
          </fileset>
