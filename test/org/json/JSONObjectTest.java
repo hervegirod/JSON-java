@@ -24,6 +24,8 @@ package org.json;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import java.io.IOException;
+import java.net.URL;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,7 +58,7 @@ public class JSONObjectTest {
    }
 
    /**
-    * Test of accumulate method, of class JSONObject.
+    * Test of creation method, of class JSONObject.
     */
    @Test
    public void testCreate() {
@@ -91,5 +93,69 @@ public class JSONObjectTest {
       assertEquals("id", 100001, id);
       String nationality = jsonObjField.getString("nationality");
       assertEquals("nationality", "American", nationality);
+   }
+
+   /**
+    * Test of Equals method, of class JSONObject.
+    */
+   @Test
+   public void testEquals() throws IOException {
+      System.out.println("JSONObjectTest : testEquals");
+
+      URL url = this.getClass().getResource("testJSON.json");
+      JSONObject jsonObj = FileUtils.toJSONObject(url);
+
+      URL url2 = this.getClass().getResource("testJSON2.json");
+      JSONObject jsonObj2 = FileUtils.toJSONObject(url2);
+
+      assertEquals("must be equal", jsonObj, jsonObj2);
+   }
+
+   /**
+    * Test of Equals method, of class JSONObject.
+    */
+   @Test
+   public void testEquals2() throws IOException {
+      System.out.println("JSONObjectTest : testEquals2");
+
+      URL url = this.getClass().getResource("testJSON.json");
+      JSONObject jsonObj = FileUtils.toJSONObject(url);
+
+      URL url2 = this.getClass().getResource("testJSON3.json");
+      JSONObject jsonObj2 = FileUtils.toJSONObject(url2);
+
+      assertFalse("must not be equal", jsonObj.equals(jsonObj2));
+   }
+
+   /**
+    * Test of Equals method, of class JSONObject.
+    */
+   @Test
+   public void testEquals3() throws IOException {
+      System.out.println("JSONObjectTest : testEquals3");
+
+      URL url = this.getClass().getResource("testJSON.json");
+      JSONObject jsonObj = FileUtils.toJSONObject(url);
+
+      URL url2 = this.getClass().getResource("testJSON4.json");
+      JSONObject jsonObj2 = FileUtils.toJSONObject(url2);
+
+      assertFalse("must not be equal", jsonObj.equals(jsonObj2));
+   }
+
+   /**
+    * Test of Equals method, of class JSONObject.
+    */
+   @Test
+   public void testEquals4() throws IOException {
+      System.out.println("JSONObjectTest : testEquals4");
+
+      URL url = this.getClass().getResource("testJSON.json");
+      JSONObject jsonObj = FileUtils.toJSONObject(url);
+
+      URL url2 = this.getClass().getResource("testJSON5.json");
+      JSONObject jsonObj2 = FileUtils.toJSONObject(url2);
+
+      assertEquals("must be equal", jsonObj, jsonObj2);
    }
 }
