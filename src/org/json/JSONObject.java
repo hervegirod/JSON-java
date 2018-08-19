@@ -73,7 +73,7 @@ import java.util.Set;
  * </ul>
  *
  * @author JSON.org
- * @version 2016-08-15
+ * @version 1.2
  */
 public class JSONObject implements Cloneable {
    /**
