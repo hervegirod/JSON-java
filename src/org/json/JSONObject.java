@@ -805,6 +805,8 @@ public class JSONObject implements Cloneable {
       Object object = this.get(key);
       if (object instanceof String) {
          return (String) object;
+      } else if (object instanceof Number) {
+         return ((Number) object).toString();
       }
       throw new JSONException("JSONObject[" + quote(key) + "] not a string.");
    }
