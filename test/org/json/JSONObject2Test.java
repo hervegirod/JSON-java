@@ -71,4 +71,22 @@ public class JSONObject2Test {
       assertEquals("int field", "Tom", jsonObj.getString("name"));
    }
 
+   /**
+    * Test of creation method, of class JSONObject.
+    */
+   @Test
+   public void testCreate() {
+      System.out.println("JSONObject2Test : testCreate");
+
+      JSONObject jsonObj = JSONObject.create()
+         .put("name", "Tom")
+         .put("birthday", "1940-02-10")
+         .put("age", 76)
+         .put("married", false);
+
+      assertEquals("int field", 76, jsonObj.get("age"));
+      assertEquals("int field", "76", jsonObj.getString("age"));
+      assertEquals("int field", "Tom", jsonObj.getString("name"));
+   }
+
 }

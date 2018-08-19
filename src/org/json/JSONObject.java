@@ -410,6 +410,16 @@ public class JSONObject implements Cloneable {
    }
 
    /**
+    * Create a new JSONObject.
+    *
+    * @return the JSONObject
+    */
+   public static JSONObject create() {
+      JSONObject obj = new JSONObject();
+      return obj;
+   }
+
+   /**
     * Constructor to specify an initial capacity of the internal map. Useful for library
     * internal calls where we know, or at least can best guess, how big this JSONObject
     * will be.
