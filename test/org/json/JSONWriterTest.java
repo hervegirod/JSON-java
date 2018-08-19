@@ -37,7 +37,7 @@ import org.junit.Test;
 
 /**
  *
- * @author scdsahv
+ * @since 1.1
  */
 public class JSONWriterTest {
 
