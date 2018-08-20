@@ -6,6 +6,12 @@ For the https://github.com/hervegirod/JSON-java fork:
            JSONObject and JSONArray both have an equals and hashCode method
            a FileUtils class with static method has been added to simply the generation to/from a File / a JSON object
            The supported Java version is Java 8
+1.1        Add Unit tests from the https://github.com/stleary/JSON-Java-unit-test project
+1.2        JSONObject and JSONArray now have static methods to create new JSONObject or JSONArray, allowing to simplify the creation
+           of a JSON content
+           Use multicatch in exceptions rather than using a generic exception
+1.3        Add new methods in the FileUtils class to create a Javascript expression rather than a JSON content. This can be useful for
+           some browsers which do not allow to open JSON content in a local environment
 
 For https://github.com/stleary/JSON-java project
 20180813    POM change to include Automatic-Module-Name (#431)
