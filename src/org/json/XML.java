@@ -527,10 +527,8 @@ public class XML {
     * All values are converted as strings, for 1, 01, 29.0 will not be coerced to
     * numbers but will instead be the exact value as seen in the XML document.
     *
-    * @param string
-    * The source string.
-    * @param keepStrings If true, then values will not be coerced into boolean
-    * or numeric values and will instead be left as strings
+    * @param string The source string.
+    * @param keepStrings If true, then values will not be coerced into boolean or numeric values and will instead be left as strings
     * @return A JSONObject containing the structured data from the XML string.
     * @throws JSONException Thrown if there is an errors while parsing the string
     */

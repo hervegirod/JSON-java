@@ -2535,14 +2535,11 @@ public class JSONObject implements Cloneable {
     * Warning: This method assumes that the data structure is acyclical.
     * </b>
     *
-    * @param writer
-    * Writes the serialized JSON
-    * @param indentFactor
-    * The number of spaces to add to each level of indentation.
-    * @param indent
-    * The indentation of the top level.
-    * @return The writer.
-    * @throws JSONException
+    * @param writer Writes the serialized JSON
+    * @param indentFactor The number of spaces to add to each level of indentation
+    * @param indent The indentation of the top level
+    * @return The writer
+    * @throws JSONException if the JSONObject was unable to write
     */
    public Writer write(Writer writer, int indentFactor, int indent) throws JSONException {
       try {
@@ -2560,7 +2557,7 @@ public class JSONObject implements Cloneable {
             }
             try {
                writeValue(writer, entry.getValue(), indentFactor, indent);
-            } catch (Exception e) {
+            } catch (IOException | JSONException e) {
                throw new JSONException("Unable to write JSONObject value for key: " + key, e);
             }
          } else if (length != 0) {
@@ -2581,7 +2578,7 @@ public class JSONObject implements Cloneable {
                }
                try {
                   writeValue(writer, entry.getValue(), indentFactor, newindent);
-               } catch (Exception e) {
+               } catch (IOException | JSONException e) {
                   throw new JSONException("Unable to write JSONObject value for key: " + key, e);
                }
                commanate = true;
