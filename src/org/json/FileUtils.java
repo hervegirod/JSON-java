@@ -34,8 +34,9 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
+ * Contains several utility methods to convert from / to a File / an URL / a JSON object.
  *
- * @since 1.0
+ * @version 1.3.1
  */
 public class FileUtils {
    private FileUtils() {
@@ -126,6 +127,19 @@ public class FileUtils {
    }
 
    /**
+    * Save a JSONObject as an URL.
+    *
+    * @param object the JSONObject
+    * @param url the URL
+    * @param var the variable to affect
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONObject was unable to write
+    */
+   public static void toURL(JSONObject object, URL url, String var) throws IOException, JSONException {
+      toURL(object, url, 0, 0, var);
+   }
+
+   /**
     * Save a JSONObject as an URL, using a specified indentFactor and indent.
     *
     * @param object the JSONObject
@@ -141,6 +155,28 @@ public class FileUtils {
 
       OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
       BufferedWriter writer = new BufferedWriter(out);
+      object.write(writer, indentFactor, indent);
+      writer.flush();
+   }
+
+   /**
+    * Save a JSONObject as an URL, using a specified indentFactor and indent.
+    *
+    * @param object the JSONObject
+    * @param url the URL
+    * @param indentFactor The number of spaces to add to each level of indentation
+    * @param indent The indentation of the top level
+    * @param var the variable to affect
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONObject was unable to write
+    */
+   public static void toURL(JSONObject object, URL url, int indentFactor, int indent, String var) throws IOException, JSONException {
+      URLConnection connection = url.openConnection();
+      connection.setDoOutput(true);
+
+      OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+      BufferedWriter writer = new BufferedWriter(out);
+      writer.write("var " + var + " = ");
       object.write(writer, indentFactor, indent);
       writer.flush();
    }
