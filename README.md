@@ -3,10 +3,10 @@ JSON in Java [package org.json]
 
 This is a fork of the JSON project in github (https://github.com/stleary/JSON-java) for the 20180813 version.
 
-Compared to this implementation:
+Compared to the reference JSON implementation:
 - this is a Netbeans project
 - JSONObject and JSONArray both have an equals and hashCode method
-- a FileUtils class with static method has been added to simply the generation to/from a File / a JSON object
+- a FileUtils class with static method has been added to simplify the generation to/from a File / a JSON object
 - The supported Java version is Java 8
 
 JSON is a light-weight, language independent, data interchange format.
