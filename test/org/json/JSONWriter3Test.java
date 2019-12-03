@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018, 2019 by Herve Girod
+Copyright (C) 2019 by Herve Girod
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,9 @@ package org.json;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,11 +35,11 @@ import org.junit.Test;
 
 /**
  *
- * @version 1.4
+ * @since 1.4
  */
-public class JSONWriterTest {
+public class JSONWriter3Test {
 
-   public JSONWriterTest() {
+   public JSONWriter3Test() {
    }
 
    @BeforeClass
@@ -61,11 +59,11 @@ public class JSONWriterTest {
    }
 
    /**
-    * Test of FileUtils.toJSONObject(File).
+    * Test of FileUtils.toURL(JSONObject, URL).
     */
    @Test
    public void testWrite() throws IOException {
-      System.out.println("JSONWriterTest : testWrite");
+      System.out.println("JSONWriter3Test : testWrite");
       JSONObject jsonObj = new JSONObject();
       jsonObj.put("name", "Tom");
       jsonObj.put("birthday", "1940-02-10");
@@ -83,26 +81,22 @@ public class JSONWriterTest {
       jsonObj.put("passport", passportJsonObj);
 
       File file = File.createTempFile("json", ".json");
-      try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-         jsonObj.write(writer);
-         writer.flush();
-         jsonObj = FileUtils.toJSONObject(file);
+      URL url = file.toURI().toURL();
+      FileUtils.toURL(jsonObj, url);
 
-         boolean isMarried = jsonObj.getBoolean("married");
-         assertFalse("married", isMarried);
-         int age = jsonObj.getInt("age");
-         assertEquals("age", 76, age);
-         String name = jsonObj.getString("name");
-         assertEquals("name", "Tom", name);
+      jsonObj = FileUtils.toJSONObject(url);
+      boolean isMarried = jsonObj.getBoolean("married");
+      assertFalse("married", isMarried);
+      int age = jsonObj.getInt("age");
+      assertEquals("age", 76, age);
+      String name = jsonObj.getString("name");
+      assertEquals("name", "Tom", name);
 
-         JSONObject jsonObjField = jsonObj.getJSONObject("passport");
-         assertNotNull("passport", jsonObjField);
-         int id = jsonObjField.getInt("id");
-         assertEquals("id", 100001, id);
-         String nationality = jsonObjField.getString("nationality");
-         assertEquals("nationality", "American", nationality);
-      } catch (IOException e) {
-         fail("Could not write JSON content");
-      }
+      JSONObject jsonObjField = jsonObj.getJSONObject("passport");
+      assertNotNull("passport", jsonObjField);
+      int id = jsonObjField.getInt("id");
+      assertEquals("id", 100001, id);
+      String nationality = jsonObjField.getString("nationality");
+      assertEquals("nationality", "American", nationality);
    }
 }
