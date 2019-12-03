@@ -73,7 +73,7 @@ import java.util.Set;
  * </ul>
  *
  * @author JSON.org
- * @version 1.2
+ * @version 1.4
  */
 public class JSONObject implements Cloneable {
    /**
@@ -361,13 +361,9 @@ public class JSONObject implements Cloneable {
     * Construct a JSONObject from a source JSON text string. This is the most
     * commonly used JSONObject constructor.
     *
-    * @param source
-    * A string beginning with <code>{</code>&nbsp;<small>(left
-    * brace)</small> and ending with <code>}</code>
+    * @param source A string beginning with <code>{</code>&nbsp;<small>(left brace)</small> and ending with <code>}</code>
     * &nbsp;<small>(right brace)</small>.
-    * @exception JSONException
-    * If there is a syntax error in the source string or a
-    * duplicated key.
+    * @exception JSONException If there is a syntax error in the source string or a duplicated key.
     */
    public JSONObject(String source) throws JSONException {
       this(new JSONTokener(source));
@@ -470,6 +466,24 @@ public class JSONObject implements Cloneable {
          Number number1 = (Number) value1;
          Number number2 = (Number) value2;
          return number1.floatValue() == number2.floatValue();
+      } else if (value1 instanceof Number && value2 instanceof String) {
+         Number number1 = (Number) value1;
+         String string2 = (String) value2;
+         try {
+            float number2 = Float.parseFloat(string2);
+            return number1.floatValue() == number2;
+         } catch (NumberFormatException e) {
+            return false;
+         }
+      } else if (value1 instanceof String && value2 instanceof Number) {
+         String string1 = (String) value1;
+         Number number2 = (Number) value2;
+         try {
+            float number1 = Float.parseFloat(string1);
+            return number1 == number2.floatValue();
+         } catch (NumberFormatException e) {
+            return false;
+         }
       } else {
          return value1.equals(value2);
       }
@@ -1091,10 +1105,9 @@ public class JSONObject implements Cloneable {
    /**
     * Get the enum value associated with a key.
     *
-    * @param clazz
-    * The type of enum to retrieve.
-    * @param key
-    * A key string.
+    * @param <E> The enum type subclass
+    * @param clazz The type of enum to retrieve.
+    * @param key A key string.
     * @return The enum value associated with the key or null if not found
     */
    public <E extends Enum<E>> E optEnum(Class<E> clazz, String key) {
@@ -1104,14 +1117,12 @@ public class JSONObject implements Cloneable {
    /**
     * Get the enum value associated with a key.
     *
-    * @param clazz
-    * The type of enum to retrieve.
-    * @param key
-    * A key string.
-    * @param defaultValue
-    * The default in case the value is not found
-    * @return The enum value associated with the key or defaultValue
-    * if the value is not found or cannot be assigned to <code>clazz</code>
+    * @param <E> The enum type subclass
+    * @param clazz The type of enum to retrieve.
+    * @param key A key string.
+    * @param defaultValue The default in case the value is not found
+    * @return The enum value associated with the key or defaultValue if the value is not found or cannot be assigned
+    * to <code>clazz</code>
     */
    public <E extends Enum<E>> E optEnum(Class<E> clazz, String key, E defaultValue) {
       try {
@@ -1126,9 +1137,7 @@ public class JSONObject implements Cloneable {
             return myE;
          }
          return Enum.valueOf(clazz, val.toString());
-      } catch (IllegalArgumentException e) {
-         return defaultValue;
-      } catch (NullPointerException e) {
+      } catch (IllegalArgumentException | NullPointerException e) {
          return defaultValue;
       }
    }
@@ -1162,7 +1171,7 @@ public class JSONObject implements Cloneable {
          return defaultValue;
       }
       if (val instanceof Boolean) {
-         return ((Boolean) val).booleanValue();
+         return ((Boolean) val);
       }
       try {
          // we'll use the get anyway because it does string conversion.
@@ -1290,7 +1299,7 @@ public class JSONObject implements Cloneable {
       if (val instanceof String) {
          try {
             return Double.parseDouble((String) val);
-         } catch (Exception e) {
+         } catch (NumberFormatException e) {
             return defaultValue;
          }
       }
@@ -1649,10 +1658,7 @@ public class JSONObject implements Cloneable {
          try {
             Method im = i.getMethod(m.getName(), m.getParameterTypes());
             return getAnnotation(im, annotationClass);
-         } catch (final SecurityException ex) {
-            continue;
-         } catch (final NoSuchMethodException ex) {
-            continue;
+         } catch (final SecurityException | NoSuchMethodException ex) {
          }
       }
 
@@ -1660,9 +1666,7 @@ public class JSONObject implements Cloneable {
          return getAnnotation(
             c.getSuperclass().getMethod(m.getName(), m.getParameterTypes()),
             annotationClass);
-      } catch (final SecurityException ex) {
-         return null;
-      } catch (final NoSuchMethodException ex) {
+      } catch (final SecurityException | NoSuchMethodException ex) {
          return null;
       }
    }
@@ -1706,10 +1710,7 @@ public class JSONObject implements Cloneable {
                // since the annotation was on the interface, add 1
                return d + 1;
             }
-         } catch (final SecurityException ex) {
-            continue;
-         } catch (final NoSuchMethodException ex) {
-            continue;
+         } catch (final SecurityException | NoSuchMethodException ex) {
          }
       }
 
@@ -1722,9 +1723,7 @@ public class JSONObject implements Cloneable {
             return d + 1;
          }
          return -1;
-      } catch (final SecurityException ex) {
-         return -1;
-      } catch (final NoSuchMethodException ex) {
+      } catch (final SecurityException | NoSuchMethodException ex) {
          return -1;
       }
    }

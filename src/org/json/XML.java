@@ -2,7 +2,7 @@ package org.json;
 
 /*
 Copyright (c) 2015 JSON.org
-Copyright (c) 2018 Herve Girod
+Copyright (c) 2018, 2019 Herve Girod
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,8 @@ import java.util.Iterator;
  * covert a JSONObject into an XML text.
  *
  * @author JSON.org
- * @version 2016-08-10
+ * @version 1.4
  */
-@SuppressWarnings("boxing")
 public class XML {
    /** The Character '&amp;'. */
    public static final Character AMP = '&';
@@ -219,8 +218,7 @@ public class XML {
       }
       for (i = 0; i < length; i += 1) {
          if (Character.isWhitespace(string.charAt(i))) {
-            throw new JSONException("'" + string
-               + "' contains a space character.");
+            throw new JSONException("'" + string + "' contains a space character.");
          }
       }
    }
@@ -237,11 +235,10 @@ public class XML {
     * @return true if the close tag is processed.
     * @throws JSONException
     */
-   private static boolean parse(XMLTokener x, JSONObject context, String name, boolean keepStrings)
-      throws JSONException {
+   private static boolean parse(XMLTokener x, JSONObject context, String name, boolean keepStrings) throws JSONException {
       char c;
       int i;
-      JSONObject jsonobject = null;
+      JSONObject jsonobject;
       String string;
       String tagName;
       Object token;
@@ -332,8 +329,7 @@ public class XML {
                   if (!(token instanceof String)) {
                      throw x.syntaxError("Missing value");
                   }
-                  jsonobject.accumulate(string,
-                     keepStrings ? ((String) token) : stringToValue((String) token));
+                  jsonobject.accumulate(string, keepStrings ? ((String) token) : stringToValue((String) token));
                   token = null;
                } else {
                   jsonobject.accumulate(string, "");
@@ -421,8 +417,7 @@ public class XML {
          try {
             // if we want full Big Number support this block can be replaced with:
             // return stringToNumber(string);
-            if (string.indexOf('.') > -1 || string.indexOf('e') > -1
-               || string.indexOf('E') > -1 || "-0".equals(string)) {
+            if (string.indexOf('.') > -1 || string.indexOf('e') > -1 || string.indexOf('E') > -1 || "-0".equals(string)) {
                Double d = Double.valueOf(string);
                if (!d.isInfinite() && !d.isNaN()) {
                   return d;
@@ -431,12 +426,12 @@ public class XML {
                Long myLong = Long.valueOf(string);
                if (string.equals(myLong.toString())) {
                   if (myLong.longValue() == myLong.intValue()) {
-                     return Integer.valueOf(myLong.intValue());
+                     return myLong.intValue();
                   }
                   return myLong;
                }
             }
-         } catch (Exception ignore) {
+         } catch (NumberFormatException ignore) {
          }
       }
       return string;
@@ -662,8 +657,7 @@ public class XML {
 
       string = (object == null) ? "null" : escape(object.toString());
       return (tagName == null) ? "\"" + string + "\""
-         : (string.length() == 0) ? "<" + tagName + "/>" : "<" + tagName
-         + ">" + string + "</" + tagName + ">";
+         : (string.length() == 0) ? "<" + tagName + "/>" : "<" + tagName + ">" + string + "</" + tagName + ">";
 
    }
 }

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 by Herve Girod
+Copyright (C) 2018, 2019 by Herve Girod
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Contains several utility methods to convert from / to a File / an URL / a JSON object.
  *
- * @version 1.3.1
+ * @version 1.4
  */
 public class FileUtils {
    private FileUtils() {
@@ -150,13 +148,8 @@ public class FileUtils {
     * @throws JSONException if the JSONObject was unable to write
     */
    public static void toURL(JSONObject object, URL url, int indentFactor, int indent) throws IOException, JSONException {
-      URLConnection connection = url.openConnection();
-      connection.setDoOutput(true);
-
-      OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-      BufferedWriter writer = new BufferedWriter(out);
-      object.write(writer, indentFactor, indent);
-      writer.flush();
+      File file = new File(url.getFile());
+      toFile(object, file, indentFactor, indent);
    }
 
    /**
@@ -171,14 +164,8 @@ public class FileUtils {
     * @throws JSONException if the JSONObject was unable to write
     */
    public static void toURL(JSONObject object, URL url, int indentFactor, int indent, String var) throws IOException, JSONException {
-      URLConnection connection = url.openConnection();
-      connection.setDoOutput(true);
-
-      OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-      BufferedWriter writer = new BufferedWriter(out);
-      writer.write("var " + var + " = ");
-      object.write(writer, indentFactor, indent);
-      writer.flush();
+      File file = new File(url.getFile());
+      toFile(object, file, indentFactor, indent, var);
    }
 
    /**

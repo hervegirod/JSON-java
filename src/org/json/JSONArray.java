@@ -78,7 +78,7 @@ import java.util.Objects;
  * </ul>
  *
  * @author JSON.org
- * @version 1.2
+ * @version 1.4
  */
 public class JSONArray implements Iterable<Object>, Cloneable {
 
@@ -97,10 +97,8 @@ public class JSONArray implements Iterable<Object>, Cloneable {
    /**
     * Construct a JSONArray from a JSONTokener.
     *
-    * @param x
-    * A JSONTokener
-    * @throws JSONException
-    * If there is a syntax error.
+    * @param x A JSONTokener
+    * @throws JSONException If there is a syntax error.
     */
    public JSONArray(JSONTokener x) throws JSONException {
       this();
@@ -150,12 +148,9 @@ public class JSONArray implements Iterable<Object>, Cloneable {
    /**
     * Construct a JSONArray from a source JSON text.
     *
-    * @param source
-    * A string that begins with <code>[</code>&nbsp;<small>(left
-    * bracket)</small> and ends with <code>]</code>
+    * @param source A string that begins with <code>[</code>&nbsp;<small>(left bracket)</small> and ends with <code>]</code>
     * &nbsp;<small>(right bracket)</small>.
-    * @throws JSONException
-    * If there is a syntax error.
+    * @throws JSONException If there is a syntax error.
     */
    public JSONArray(String source) throws JSONException {
       this(new JSONTokener(source));
@@ -164,8 +159,7 @@ public class JSONArray implements Iterable<Object>, Cloneable {
    /**
     * Construct a JSONArray from a Collection.
     *
-    * @param collection
-    * A Collection.
+    * @param collection A Collection.
     */
    public JSONArray(Collection<?> collection) {
       if (collection == null) {
@@ -360,6 +354,7 @@ public class JSONArray implements Iterable<Object>, Cloneable {
    /**
     * Get the enum value associated with an index.
     *
+    * @param <E> the enum class
     * @param clazz The type of enum to retrieve
     * @param index The index must be between 0 and length() - 1
     * @return The enum value at the index location
@@ -389,8 +384,7 @@ public class JSONArray implements Iterable<Object>, Cloneable {
       try {
          return new BigDecimal(object.toString());
       } catch (Exception e) {
-         throw new JSONException("JSONArray[" + index
-            + "] could not convert to BigDecimal.", e);
+         throw new JSONException("JSONArray[" + index + "] could not convert to BigDecimal.", e);
       }
    }
 
@@ -688,6 +682,7 @@ public class JSONArray implements Iterable<Object>, Cloneable {
    /**
     * Get the enum value associated with a key.
     *
+    * @param <E> the enum class
     * @param clazz The type of enum to retrieve
     * @param index The index must be between 0 and length() - 1
     * @return The enum value at the index location or null if not found
@@ -699,6 +694,7 @@ public class JSONArray implements Iterable<Object>, Cloneable {
    /**
     * Get the enum value associated with a key.
     *
+    * @param <E> the enum class
     * @param clazz The type of enum to retrieve
     * @param index The index must be between 0 and length() - 1
     * @param defaultValue The default in case the value is not found
