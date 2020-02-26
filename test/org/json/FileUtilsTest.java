@@ -59,7 +59,7 @@ public class FileUtilsTest {
    }
 
    /**
-    * Test of toFile method, of class FileUtils.
+    * Test of toJSONObject method, of class FileUtils.
     */
    @Test
    public void testFromFile() throws Exception {
@@ -84,7 +84,7 @@ public class FileUtilsTest {
    }
 
    /**
-    * Test of array method, of class JSONWriter.
+    * Test of toFile method, of class JSONWriter.
     */
    @Test
    public void testToFile() throws IOException {
@@ -106,9 +106,7 @@ public class FileUtilsTest {
       jsonObj.put("passport", passportJsonObj);
 
       File file = File.createTempFile("json", ".json");
-
       FileUtils.toFile(jsonObj, file);
-
       jsonObj = FileUtils.toJSONObject(file);
 
       boolean isMarried = jsonObj.getBoolean("married");
