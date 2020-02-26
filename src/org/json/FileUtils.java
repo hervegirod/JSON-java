@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018, 2019 by Herve Girod
+Copyright (C) 2018, 2019, 2020 by Herve Girod
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +34,113 @@ import java.net.URL;
 /**
  * Contains several utility methods to convert from / to a File / an URL / a JSON object.
  *
- * @version 1.4
+ * @version 1.5
  */
 public class FileUtils {
    private FileUtils() {
+   }
+
+   /**
+    * Save a JSONArray as a File, using a specified indentFactor and indent. The result will be a javascript file, where the result of the JSON content will be
+    * affected to the specified variable.
+    *
+    * @param array the JSONArray
+    * @param file the file
+    * @param indentFactor The number of spaces to add to each level of indentation
+    * @param indent The indentation of the top level
+    * @param var the variable to affect
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONArray was unable to write
+    */
+   public static void toFile(JSONArray array, File file, int indentFactor, int indent, String var) throws IOException, JSONException {
+      BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+      writer.write("var " + var + " = ");
+      array.write(writer, indentFactor, indent);
+      writer.flush();
+   }
+
+   /**
+    * Save a JSONArray as a File. The result will be a JSON file.
+    *
+    * @param array the JSONArray
+    * @param file the file
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONArray was unable to write
+    */
+   public static void toFile(JSONArray array, File file) throws IOException, JSONException {
+      toFile(array, file, 0, 0);
+   }
+
+   /**
+    * Save a JSONArray as a File, using a specified indentFactor and indent. The result will be a JSON file.
+    *
+    * @param array the JSONArray
+    * @param file the file
+    * @param indentFactor The number of spaces to add to each level of indentation
+    * @param indent The indentation of the top level
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONArray was unable to write
+    */
+   public static void toFile(JSONArray array, File file, int indentFactor, int indent) throws IOException, JSONException {
+      BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+      array.write(writer, indentFactor, indent);
+      writer.flush();
+   }
+
+   /**
+    * Save a JSONObject as an URL.
+    *
+    * @param array the JSONArray
+    * @param url the URL
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONArray was unable to write
+    */
+   public static void toURL(JSONArray array, URL url) throws IOException, JSONException {
+      toURL(array, url, 0, 0);
+   }
+
+   /**
+    * Save a JSONObject as an URL.
+    *
+    * @param array the JSONArray
+    * @param url the URL
+    * @param var the variable to affect
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONArray was unable to write
+    */
+   public static void toURL(JSONArray array, URL url, String var) throws IOException, JSONException {
+      toURL(array, url, 0, 0, var);
+   }
+
+   /**
+    * Save a JSONArray as an URL, using a specified indentFactor and indent.
+    *
+    * @param array the JSONArray
+    * @param url the URL
+    * @param indentFactor The number of spaces to add to each level of indentation
+    * @param indent The indentation of the top level
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONArray was unable to write
+    */
+   public static void toURL(JSONArray array, URL url, int indentFactor, int indent) throws IOException, JSONException {
+      File file = new File(url.getFile());
+      toFile(array, file, indentFactor, indent);
+   }
+
+   /**
+    * Save a JSONArray as an URL, using a specified indentFactor and indent.
+    *
+    * @param array the JSONArray
+    * @param url the URL
+    * @param indentFactor The number of spaces to add to each level of indentation
+    * @param indent The indentation of the top level
+    * @param var the variable to affect
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the JSONArray was unable to write
+    */
+   public static void toURL(JSONArray array, URL url, int indentFactor, int indent, String var) throws IOException, JSONException {
+      File file = new File(url.getFile());
+      toFile(array, file, indentFactor, indent, var);
    }
 
    /**
@@ -166,6 +269,64 @@ public class FileUtils {
    public static void toURL(JSONObject object, URL url, int indentFactor, int indent, String var) throws IOException, JSONException {
       File file = new File(url.getFile());
       toFile(object, file, indentFactor, indent, var);
+   }
+
+   /**
+    * Load a File as a JSONObject.
+    *
+    * @param file the File
+    * @return the JSONArray
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the File is not a valid JSON file
+    */
+   public static JSONArray toJSONArray(File file) throws IOException, JSONException {
+      BufferedReader reader = new BufferedReader(new FileReader(file));
+      JSONArray array = toJSONArray(reader);
+      return array;
+   }
+
+   /**
+    * Load an URL as a JSONArray.
+    *
+    * @param url the URL
+    * @return the JSONArray
+    * @throws IOException if an IOException occured
+    * @throws JSONException if the URL is not a valid JSON file
+    */
+   public static JSONArray toJSONArray(URL url) throws IOException, JSONException {
+      InputStream stream = url.openStream();
+      BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+      JSONArray array = toJSONArray(reader);
+      return array;
+   }
+
+   /**
+    * Use a reader to load a JSONArray.
+    *
+    * @param reader the reader
+    * @return the JSONArray
+    * @throws IOException if an IOException occured
+    * @throws JSONException if a JSONException occured
+    */
+   public static JSONArray toJSONArray(BufferedReader reader) throws IOException, JSONException {
+      StringBuilder buf = new StringBuilder();
+      boolean started = false;
+      while (true) {
+         String line = reader.readLine();
+         if (line != null) {
+            buf.append(line);
+            if (started) {
+               buf.append('\n');
+            } else {
+               started = true;
+            }
+         } else {
+            break;
+         }
+      }
+      reader.close();
+      JSONArray array = new JSONArray(buf.toString());
+      return array;
    }
 
    /**
