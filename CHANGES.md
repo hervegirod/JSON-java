@@ -12,6 +12,9 @@ For the https://github.com/hervegirod/JSON-java fork:
            Use multicatch in exceptions rather than using a generic exception
 1.3        Add new methods in the FileUtils class to create a Javascript expression rather than a JSON content. This can be useful for
            some browsers which do not allow to open JSON content in a local environment
+1.4        Improve the equals method in the JSONObject class
+           Improve code formatting
+1.5        Add new methods in the FileUtils class to create a JSONArray from a String, File, or a Reader
 
 For https://github.com/stleary/JSON-java project
 20180813    POM change to include Automatic-Module-Name (#431)
