@@ -15,6 +15,7 @@ For the https://github.com/hervegirod/JSON-java fork:
 1.4        Improve the equals method in the JSONObject class
            Improve code formatting
 1.5        Add new methods in the FileUtils class to create a JSONArray from a String, File, or a Reader
+1.6        Fix null values being serialized incorrectly
 
 For https://github.com/stleary/JSON-java project
 20180813    POM change to include Automatic-Module-Name (#431)
